@@ -28,11 +28,11 @@ export class AuthController {
         );
       }
 
-      const { access_token } = await this.authService.login(admin);
+      const tokens = await this.authService.login(admin);
       
       return {
         success: true,
-        access_token
+        ...tokens
       };
     } catch (error) {
       throw new HttpException(
@@ -41,6 +41,25 @@ export class AuthController {
           message: error.response?.message || 'Внутренняя ошибка сервера' 
         },
         HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  @Post('refresh')
+  @HttpCode(200)
+  @ApiResponse({ status: 200, description: 'Токен обновлен' })
+  @ApiResponse({ status: 401, description: 'Неверный refresh токен' })
+  async refresh(@Body() body: { refresh_token: string }) {
+    try {
+      const result = await this.authService.refreshToken(body.refresh_token);
+      return {
+        success: true,
+        access_token: result.access_token
+      };
+    } catch (e) {
+      throw new HttpException(
+        { success: false, message: 'Неверный refresh токен' },
+        HttpStatus.UNAUTHORIZED
       );
     }
   }

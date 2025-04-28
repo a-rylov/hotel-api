@@ -9,7 +9,7 @@ import { AdminsModule } from '../admins/admins.module';
     AdminsModule,
     JwtModule.register({
       secret: 'simple_dev_secret',
-      signOptions: { expiresIn: '1h' },
+      signOptions: { expiresIn: '15s' },
     }),
   ],
   providers: [AuthService],
