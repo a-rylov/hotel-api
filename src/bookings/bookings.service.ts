@@ -15,17 +15,14 @@ export class BookingsService {
     private roomsRepository: Repository<Room>,
   ) {}
 
-  // Создание нового бронирования
   async create(createBookingDto: CreateBookingDto): Promise<Booking> {
     const { roomId, startDate, endDate, guests, contactName, contactEmail } = createBookingDto;
 
-    // Проверка, существует ли комната с таким ID
     const room = await this.roomsRepository.findOne( { where: { id: roomId } } );
     if (!room) {
       throw new NotFoundException(`Room with ID ${roomId} not found`);
     }
 
-    // Создаем новый объект бронирования
     const booking = this.bookingsRepository.create({
       room,
       startDate,
@@ -38,14 +35,12 @@ export class BookingsService {
     return this.bookingsRepository.save(booking);
   }
 
-  // Получение всех бронирований
   async findAll(): Promise<Booking[]> {
     return this.bookingsRepository.find({ 
       relations: ['room']
     })
   }
 
-  // Получение бронирования по ID
   async findOne(id: number): Promise<Booking> {
     const booking = await this.bookingsRepository.findOne({ where: { id }, relations: ['room'] });
     if (!booking) {

@@ -16,8 +16,7 @@ export async function seedRooms(dataSource: DataSource) {
         'https://hotel-spb.ru/assets/components/phpthumbof/cache/room-deluxe_001.52f4436743375e772a99cbd9955f2378.jpg',
         'https://hotel-spb.ru/assets/components/phpthumbof/cache/room-deluxe_003.52f4436743375e772a99cbd9955f2378.jpg',
         'https://hotel-spb.ru/assets/components/phpthumbof/cache/room-deluxe_007.52f4436743375e772a99cbd9955f2378.jpg'
-      ],
-      availableDates: []
+      ]
     },
     {
       id: 2,
@@ -31,8 +30,7 @@ export async function seedRooms(dataSource: DataSource) {
         'https://maghotel-vityazevo.ru/images/sampledata/rooms/standart6/01st6_2.jpg',
         'https://maghotel-vityazevo.ru/images/sampledata/rooms/standart6/01st6_4.jpg',
         'https://maghotel-vityazevo.ru/images/sampledata/rooms/standart6/01st6_6.jpg'
-      ],
-      availableDates: []
+      ]
     },
     {
       id: 3,
@@ -43,16 +41,15 @@ export async function seedRooms(dataSource: DataSource) {
       bedType: 'односпальная',
       images: [
         'https://hotel-spb.ru/assets/components/phpthumbof/cache/room-standart_07.52f4436743375e772a99cbd9955f2378.jpg'
-      ],
-      availableDates: []
+      ]
     }
   ];
 
   const exists = await roomRepo.count();
   if (exists === 0) {
     await roomRepo.save(rooms);
-    console.log('✅ Rooms seeded!');
+    console.log('Rooms seeded!');
   } else {
-    console.log('⚠️ Rooms already seeded.');
+    console.log('Rooms already seeded.');
   }
 }
